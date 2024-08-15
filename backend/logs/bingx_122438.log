@@ -1,0 +1,43 @@
+[ 2024-08-15T12:24:38.549639+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
+[ 2024-08-15T12:30:20.779094+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:30:20.780976+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:30:20.782997+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:30:20.783204+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:30:22.024740+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:30:22.025048+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:30:22.033548+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:30:22.034095+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:30:23.220699+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:30:23.220910+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:30:23.240514+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:30:23.240724+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:30:24.977725+0500 ] [ DEBUG ] [ Token is received! ]
+[ 2024-08-15T12:30:24.979275+0500 ] [ DEBUG ] [ Token is received! ]
+[ 2024-08-15T12:30:26.527364+0500 ] [ SUCCESS ] [ Abcex report has successfuly been done ]
+[ 2024-08-15T12:30:26.582843+0500 ] [ SUCCESS ] [ Abcex report has successfuly been done ]
+[ 2024-08-15T12:30:26.707803+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
+[ 2024-08-15T12:30:26.746585+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]

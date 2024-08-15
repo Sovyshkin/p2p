@@ -82,7 +82,7 @@ class BitGet:
         Used to retrive the list of suitable merchants
         '''
         url = "https://www.bitget.com/v1/p2p/pub/adv/queryAdvList"
-
+        print(f"PRICE {self.price}")
         headers = {
             "Accept": "application/json, text/plain, */*",
             "Content-Type": "application/json;charset=utf-8",
@@ -179,14 +179,5 @@ class BitGet:
         return result
 
 
-if __name__ == "__main__":
-    bitget = BitGet(
-            coin = "USDT",
-            fiat = "RUB",
-            action = Actions.BUY,
-            price = '0',
-            bank = 241 # SBP, not required
-            )
-    with open("report.json", "w") as rep:
-        rep.write(json.dumps(bitget.report(), indent=4))
+
 

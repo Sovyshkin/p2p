@@ -1,0 +1,26 @@
+[ 2024-08-15T12:45:22.872625+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
+[ 2024-08-15T12:45:31.062206+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:31.067332+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:32.276706+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:32.277355+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:33.511272+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:33.512381+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:35.085119+0500 ] [ DEBUG ] [ Token is received! ]
+[ 2024-08-15T12:45:36.389898+0500 ] [ SUCCESS ] [ Abcex report has successfuly been done ]
+[ 2024-08-15T12:45:36.554897+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]

@@ -1,0 +1,37 @@
+[ 2024-08-15T12:30:26.582843+0500 ] [ SUCCESS ] [ Abcex report has successfuly been done ]
+[ 2024-08-15T12:30:26.707803+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
+[ 2024-08-15T12:30:26.707803+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
+[ 2024-08-15T12:30:26.746585+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
+[ 2024-08-15T12:30:26.746585+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]

@@ -1,4 +1,6 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for, session, flash, make_response
+import asyncio
+from typing import Dict, Any
 from datetime import datetime, timedelta
 from loguru import logger
 import sqlite3
@@ -15,6 +17,8 @@ from flask_cors import CORS, cross_origin
 from bitget import BitGet, Actions as BitGetActions
 # Abcex
 from abcex import Abcex, Actions as AbcexActions
+# BingX
+from bingx import BingX, Actions as BingXActions
 
 app = Flask(__name__)
 
@@ -80,21 +84,23 @@ def admin()-> json:
     paymetod_mexc =  take_bank_metod_mexc(coin)
     if side:
         tradeType = 'BUY'
-        # Покупка для BitGet и Abcex
+        # Покупка для BitGet, Abcex, BingX
         bitget_action = BitGetActions.BUY
         abcex_action = AbcexActions.BUY
+        bingx_action = BingXActions.BUY
     else:
         tradeType = 'SELL'
-        # Продажа для BitGet и Abcex
+        # Продажа для BitGet, Abcex, BingX
         bitget_action = BitGetActions.SELL
         abcex_action = AbcexActions.SELL
+        bingx_action = BingXActions.SELL
+
 
     price_list_mexc_bitpapa = parce_bitpapa(side, amount, currencyId, tokenId, banks)
     spot_bitpapa = bitpapa_spot()
     price_list_mexc_p2p = take_p2p_mexc(amount, tokenId, coin, paymant, tradeType)
     spot_mexc = mexc_spot()
 
-    print(bitget_action)
     # BitGet
     bitget = BitGet(
         coin = symbol,
@@ -132,7 +138,7 @@ def admin()-> json:
         # bank = добавить позже
     )
 
-    # Получение отчёта от BitGet
+    # Получение отчёта от Abcex
     try_count = 0
     abcex_report = {}
     # Если все попытки получения закончились неудачно - возвращается пустой словарь
@@ -145,7 +151,28 @@ def admin()-> json:
             if try_count == 3:
                 print(f"[!] Abcex info can not be received: {e}")
         else:
-            break   
+            break
+
+    # Получение отчёта от BingX
+    bingx_report = {}
+    if symbol == "USDT":
+        bingx = BingX(
+            api_key= "",
+            secret = "",
+            fiat = coin,
+            action = bingx_action,
+            price = float(amount) 
+        )
+        async def get_bingx_report(bingx: BingX) -> Dict[str, Any]:
+            try:
+                await bingx.setup_playwright()
+                report = await bingx.report()
+                await bingx.stop()
+                return report
+            except Exception as e:
+                print(f"[!] BingX info can not be received: {e}")
+        
+        bingx_report = asyncio.run(get_bingx_report(bingx))
 
     result['price_kuc'] = price_list_kuc
     result['only_code_bank_kuc'] = name_banks_kuc
@@ -154,15 +181,90 @@ def admin()-> json:
     result['price_list_mexc_bitpapa'] = price_list_mexc_bitpapa
     result['bitget'] = bitget_report
     result['abcex'] = abcex_report
+    result['bingx'] = bingx_report
 
     return jsonify(result)
 
 @app.route('/spot', methods=['POST'])
 def spot()-> json:
     result = {}
-    # data = request.get_json()
+    #data = request.get_json()
+    # BitGet
+    bitget = BitGet(
+        coin = "USDT",
+        fiat = "RUB",
+        price = "91",
+        action = BitGetActions.BUY,
+        logger = logger
+        # bank = добавить позже
+    )
+
+    # Получение отчёта от BitGet
+    try_count = 0
+    bitget_report = {}
+    # Если все попытки получения закончились неудачно - возвращается пустой словарь
+    while try_count < 3:
+        try:
+            bitget_report = bitget.report()
+        except Exception as e:
+            try_count += 1
+            time.sleep(1)
+            if try_count == 3:
+                print(f"[!] BitGet info can not be received: {e}")
+        else:
+            break
+
+    # Abcex
+    abcex = Abcex(
+        email = "anna.aleks491@gmail.com",
+        password = "CodeRed_491",
+        coin = "USDT",
+        fiat = "RUB",
+        price = "91",
+        action = AbcexActions.BUY,
+        logger = logger
+        # bank = добавить позже
+    )
+
+    # Получение отчёта от Abcex
+    try_count = 0
+    abcex_report = {}
+    # Если все попытки получения закончились неудачно - возвращается пустой словарь
+    while try_count < 3:
+        try:
+            abcex_report = abcex.report()
+        except Exception as e:
+            try_count += 1
+            time.sleep(1)
+            if try_count == 3:
+                print(f"[!] Abcex info can not be received: {e}")
+        else:
+            break
+
+    # Получение отчёта от BingX
+    bingx_report = {}
+    bingx = BingX(
+        api_key= "",
+        secret = "",
+        fiat = "RUB",
+        action = BingXActions.BUY,
+        price = 91.0 
+    )
+    async def get_bingx_report(bingx: BingX) -> Dict[str, Any]:
+        try:
+            await bingx.setup_playwright()
+            report = await bingx.report()
+            await bingx.stop()
+            return report
+        except Exception as e:
+            print(f"[!] BingX info can not be received: {e}")
+    
+    bingx_report = asyncio.run(get_bingx_report(bingx))
     spot_bybit_price = take_spot_bybit()
     spot_kukoin_price = kukoin_spot()
+    result['bitget'] = bitget_report
+    result['bingx'] = bingx_report
+    result['abcex'] = abcex_report
     result['bybit'] =  spot_bybit_price
     result['kucoin'] = spot_kukoin_price
     return jsonify(result)

@@ -83,6 +83,7 @@ export default {
       bitpapa: [],
       abcex: [],
       bitget: [],
+      bingx: [],
       banks_mexc: [],
       banks_abcex: [],
       banks_bitget: [],
@@ -145,49 +146,56 @@ export default {
         this.bybit = [];
         this.kucoin = [];
         this.bitpapa = [];
-        if (this.spot) {
-          let response = await axios.post(`/spot`);
-          console.log(response);
-        } else {
-          if (this.price) {
-            this.price = JSON.stringify(this.price);
-          }
-          if (this.buy) {
-            this.buy = "1";
-          } else {
-            this.buy = "0";
-          }
-          let banks = [];
-          if (this.banks_active) {
-            this.banks_active.forEach((item) => {
-              let bank = this.banks.find((bank) => bank.name == item);
-              banks.push(bank.id);
-            });
-          }
-          console.log(banks);
-          let response = await axios.post(`/admin`, {
-            params: {
-              tokenId: this.coin || "USDT",
-              currencyId: this.forex || "RUB",
-              amount: this.price,
-              paymant: banks,
-              side: this.buy,
-              name_banks: this.banks,
-            },
-          });
-          this.banks = response.data.only_code_bank_bybit;
-          this.bybit = response.data.price_byb;
-          this.kucoin = response.data.price_kuc;
-          this.mexc = response.data.price_list_mexc_p2p;
-          this.abcex = response.data.abcex.merchants;
-          this.bitget = response.data.bitget.merchants;
-          this.banks_abcex = response.data.abcex.banks;
-          this.banks_bitget = response.data.bitget.banks;
-          this.banks_mexc = response.data.paymetod_mexc;
-          this.bitpapa = response.data.price_list_mexc_bitpapa;
-          this.banks.push(this.banks_abcex);
-          console.log(response);
+        if (this.price) {
+          this.price = JSON.stringify(this.price);
         }
+        if (this.buy) {
+          this.buy = "1";
+        } else {
+          this.buy = "0";
+        }
+        let banks = [];
+        if (this.banks_active) {
+          this.banks_active.forEach((item) => {
+            let bank = this.banks.find((bank) => bank.name == item);
+            banks.push(bank.id);
+          });
+        }
+        console.log(banks);
+        let response = await axios.post(`/admin`, {
+          params: {
+            tokenId: this.coin || "USDT",
+            currencyId: this.forex || "RUB",
+            amount: this.price,
+            paymant: banks,
+            side: this.buy,
+            name_banks: this.banks,
+          },
+        });
+        this.banks = response.data.only_code_bank_bybit;
+        this.bybit = response.data.price_byb;
+        this.kucoin = response.data.price_kuc;
+        this.mexc = response.data.price_list_mexc_p2p;
+        this.abcex = response.data.abcex.merchants;
+        this.bitget = response.data.bitget.merchants;
+        this.bingx = response.data.bingx.merchants;
+        this.banks_abcex = response.data.abcex.banks;
+        this.banks_bitget = response.data.bitget.banks;
+        this.banks_bingx = response.data.bingx.banks;
+        this.banks_mexc = response.data.paymetod_mexc;
+        this.bitpapa = response.data.price_list_mexc_bitpapa;
+        this.banks.push(this.banks_abcex);
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    async load_spot() {
+      try {
+        let response = await axios.post(`/spot`);
+        this.abcex = response.data.abcex.spot;
+        console.log(this.abcex);
       } catch (err) {
         console.log(err);
       }
@@ -205,9 +213,23 @@ export default {
       }
     },
 
+    findBingxBank(id) {
+      if (id && this.banks_bingx) {
+        return this.banks_bingx.find((bank) => bank.id == id).name;
+      }
+    },
+
     findBitgetBank(id) {
       if (id && this.banks_bitget) {
         return this.banks_bitget.find((bank) => bank.id == id).name;
+      }
+    },
+
+    getInfo() {
+      if (this.spot) {
+        this.load_spot();
+      } else {
+        this.load_info();
       }
     },
   },
@@ -276,7 +298,7 @@ export default {
           p2p
         </button>
       </div>
-      <button class="btn apply" @click="load_info()">Применить</button>
+      <button class="btn apply" @click="getInfo()">Применить</button>
     </div>
     <div class="market">
       <div class="marcol">
@@ -350,21 +372,19 @@ export default {
         <div
           class="card"
           @click="activeMain(card)"
-          v-for="card in mexc"
+          v-for="card in bingx"
           :key="card.id"
         >
-          <div class="title">{{ card.title }}</div>
-          <div class="available">
-            <span>Доступно:</span> {{ card.available }}
-          </div>
+          <div class="title">{{ card.merchant }}</div>
+          <div class="available"><span>Доступно:</span> {{ card.max }}</div>
           <div class="limits">
-            <span>от</span> {{ card.limit_from }} <span>до</span>
-            {{ card.limit_to }} <span>RUB</span>
+            <span>от</span> {{ card.min }} <span>до</span> {{ card.max }}
+            <span>RUB</span>
           </div>
           <div class="price">{{ card.price }} <span>RUB</span></div>
           <div class="offer_banks">
             <div class="offer_bank" v-for="bank in card.banks" :key="bank">
-              {{ bank }}
+              {{ findBingxBank(bank) }}
             </div>
           </div>
         </div>
@@ -413,12 +433,14 @@ export default {
           </div>
         </div>
       </div>
+      <!-- eslint-disable vue/no-use-v-if-with-v-for -->
       <div class="cards">
         <div
           class="card"
           @click="activeMain(card)"
           v-for="card in abcex"
           :key="card.id"
+          v-if="!spot"
         >
           <div class="title">{{ card.merchant }}</div>
           <div class="available"><span>Доступно:</span> {{ card.max }}</div>
@@ -433,7 +455,19 @@ export default {
             </div>
           </div>
         </div>
+        <div
+          class="card"
+          @click="activeMain(card)"
+          v-for="card in abcex"
+          :key="card.id"
+          v-else
+        >
+          <div class="price">
+            {{ card.price }} <span>{{ card.symbol }}</span>
+          </div>
+        </div>
       </div>
+      <!-- eslint-enable -->
       <div class="cards">
         <div
           class="card"

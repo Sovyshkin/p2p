@@ -1,0 +1,230 @@
+[ 2024-08-15T12:38:45.439961+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
+[ 2024-08-15T12:41:52.777534+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:52.780342+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:52.781744+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:52.782012+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:52.785963+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:52.788811+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:52.788349+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:52.789089+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:54.024737+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:54.025085+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:54.032121+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:54.034507+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:54.034993+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:54.036411+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:54.038193+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:54.038467+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:55.361470+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:55.362099+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:55.364182+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:55.364675+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:55.366809+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:55.367097+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:55.374736+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:55.375007+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:41:56.972777+0500 ] [ DEBUG ] [ Token is received! ]
+[ 2024-08-15T12:41:56.977135+0500 ] [ DEBUG ] [ Token is received! ]
+[ 2024-08-15T12:41:57.022825+0500 ] [ DEBUG ] [ Token is received! ]
+[ 2024-08-15T12:41:57.073069+0500 ] [ DEBUG ] [ Token is received! ]
+[ 2024-08-15T12:41:58.196353+0500 ] [ SUCCESS ] [ Abcex report has successfuly been done ]
+[ 2024-08-15T12:41:58.374029+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
+[ 2024-08-15T12:41:58.639362+0500 ] [ SUCCESS ] [ Abcex report has successfuly been done ]
+[ 2024-08-15T12:41:58.657338+0500 ] [ SUCCESS ] [ Abcex report has successfuly been done ]
+[ 2024-08-15T12:41:58.697654+0500 ] [ SUCCESS ] [ Abcex report has successfuly been done ]
+[ 2024-08-15T12:41:58.814061+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
+[ 2024-08-15T12:41:58.830825+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
+[ 2024-08-15T12:41:58.871879+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
+[ 2024-08-15T12:42:02.347009+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:42:02.347639+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:42:03.573040+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:42:03.573665+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:42:04.813762+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:42:04.815831+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:42:06.394007+0500 ] [ DEBUG ] [ Token is received! ]
+[ 2024-08-15T12:42:07.629745+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:42:07.630644+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:42:07.683026+0500 ] [ SUCCESS ] [ Abcex report has successfuly been done ]
+[ 2024-08-15T12:42:07.863759+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
+[ 2024-08-15T12:42:08.855947+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:42:08.856252+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:42:10.079549+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:42:10.080673+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:42:11.720788+0500 ] [ DEBUG ] [ Token is received! ]
+[ 2024-08-15T12:42:13.268525+0500 ] [ SUCCESS ] [ Abcex report has successfuly been done ]
+[ 2024-08-15T12:42:13.440393+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
+[ 2024-08-15T12:44:03.826295+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:03.828455+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:03.831812+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:03.832092+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:05.035888+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:05.036565+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:05.038419+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:05.038657+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:06.257076+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:06.257423+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:06.261941+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:06.262174+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:08.248804+0500 ] [ DEBUG ] [ Token is received! ]
+[ 2024-08-15T12:44:08.250357+0500 ] [ DEBUG ] [ Token is received! ]
+[ 2024-08-15T12:44:09.541653+0500 ] [ SUCCESS ] [ Abcex report has successfuly been done ]
+[ 2024-08-15T12:44:09.681315+0500 ] [ SUCCESS ] [ Abcex report has successfuly been done ]
+[ 2024-08-15T12:44:09.775036+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
+[ 2024-08-15T12:44:09.874793+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
+[ 2024-08-15T12:44:35.568675+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:35.574756+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:36.774729+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:36.775339+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:38.004608+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:38.005266+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:39.591173+0500 ] [ DEBUG ] [ Token is received! ]
+[ 2024-08-15T12:44:41.016385+0500 ] [ SUCCESS ] [ Abcex report has successfuly been done ]
+[ 2024-08-15T12:44:41.211027+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
+[ 2024-08-15T12:44:47.621406+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:47.624571+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:48.839211+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:48.839615+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:50.035976+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:50.036435+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:44:51.667959+0500 ] [ DEBUG ] [ Token is received! ]
+[ 2024-08-15T12:44:53.168456+0500 ] [ SUCCESS ] [ Abcex report has successfuly been done ]
+[ 2024-08-15T12:44:53.331516+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
+[ 2024-08-15T12:45:11.457453+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:11.461134+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:12.692110+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:12.692718+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:12.768564+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:12.769394+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:13.923069+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:13.923653+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:13.972364+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:13.973367+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:15.204722+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:15.205520+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:17.375024+0500 ] [ DEBUG ] [ Token is received! ]
+[ 2024-08-15T12:45:19.218640+0500 ] [ DEBUG ] [ Token is received! ]
+[ 2024-08-15T12:45:20.872946+0500 ] [ SUCCESS ] [ Abcex report has successfuly been done ]
+[ 2024-08-15T12:45:21.063800+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
+[ 2024-08-15T12:45:22.701134+0500 ] [ SUCCESS ] [ Abcex report has successfuly been done ]
+[ 2024-08-15T12:45:22.872625+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
+[ 2024-08-15T12:45:31.062206+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:31.067332+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:32.276706+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:32.277355+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:33.511272+0500 ] [ ERROR ] [ Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:33.512381+0500 ] [ ERROR ] [ Failed to create report - problems with banks list: Failed to retrive banks list: Expecting value: line 1 column 1 (char 0) ]
+[ 2024-08-15T12:45:35.085119+0500 ] [ DEBUG ] [ Token is received! ]
+[ 2024-08-15T12:45:36.389898+0500 ] [ SUCCESS ] [ Abcex report has successfuly been done ]
+[ 2024-08-15T12:45:36.554897+0500 ] [ ERROR ] [ Failed to start playwright: BrowserType.launch: Executable doesn't exist at /Users/vadim/Library/Caches/ms-playwright/chromium-1129/chrome-mac/Chromium.app/Contents/MacOS/Chromium
+╔════════════════════════════════════════════════════════════╗
+║ Looks like Playwright was just installed or updated.       ║
+║ Please run the following command to download new browsers: ║
+║                                                            ║
+║     playwright install                                     ║
+║                                                            ║
+║ <3 Playwright Team                                         ║
+╚════════════════════════════════════════════════════════════╝ ]
