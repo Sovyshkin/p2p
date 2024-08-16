@@ -213,19 +213,19 @@ def take_spot_bybit():
     
     if response.status_code == 200:
         data = response.json()
-        futures_pairs = [pair['name'] for pair in data['result']]
-        bybit_symb = futures_pairs
-        price_spot_bybit = {}
-        # print(futures_pairs)
-        # for symbol in futures_pairs:
-        #     print("Берем цену монеты: ", symbol)
-        #     if len(futures_pairs) > 0:
-        #         url = f'https://api.bybit.com/v5/market/tickers?category=inverse&symbol={symbol}'
-        #         response = requests.get(url)
-        #         price = response.json()
-        #         current_price = float(price['result']['list'][0]['lastPrice'])
-        #         price_spot_bybit[symbol] = str(current_price)
-        # return price_spot_bybit
+        futures_pairs = [pair['name'] for pair in data['result']][:10]
+        price_spot_bybit = []
+        for symbol in futures_pairs:
+             if len(futures_pairs) > 0:
+                 url = f'https://api.bybit.com/v5/market/tickers?category=inverse&symbol={symbol}'
+                 response = requests.get(url)
+                 price = response.json()
+                 current_price = float(price['result']['list'][0]['lastPrice'])
+                 price_spot_bybit.append({
+                     'price': str(current_price),
+                     'symbol': symbol
+                })
+        return price_spot_bybit
     else:
         print(f"Ошибка при запросе: {response.status_code}")
         e = 'Error take spot bybit!'

@@ -82,7 +82,6 @@ class BitGet:
         Used to retrive the list of suitable merchants
         '''
         url = "https://www.bitget.com/v1/p2p/pub/adv/queryAdvList"
-        print(f"PRICE {self.price}")
         headers = {
             "Accept": "application/json, text/plain, */*",
             "Content-Type": "application/json;charset=utf-8",

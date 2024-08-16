@@ -1,7 +1,7 @@
 from typing import Any, Dict, Optional
-import ccxt.async_support as ccxt
-from playwright.async_api import async_playwright, Route
-from undetected_playwright import Malenia
+import ccxt
+from playwright.sync_api import sync_playwright, Route
+from undetected_playwright import Tarnished
 from fake_useragent import UserAgent
 from enum import IntEnum
 from loguru import logger
@@ -45,72 +45,72 @@ class BingX:
         self.logger = logger
         self.logger.add(f"logs/bingx_{time.strftime('%H%M%S')}.log", format="[ {time} ] [ {level} ] [ {message} ]", rotation="50 MB")
 
-    async def setup_playwright(self) -> None:
+    def setup_playwright(self) -> None:
         '''
         Creating playwright instance
         '''
         try:
-            self.playwright = await async_playwright().start()
+            self.playwright = sync_playwright().start()
     
-            self.browser = await self.playwright.chromium.launch(
+            self.browser = self.playwright.chromium.launch(
                     args = ["--headless=new", "--dump-dom"]
             )
-            self.context = await self.browser.new_context(
+            self.context = self.browser.new_context(
                     locale="ru-RU",
                     user_agent=UserAgent(os="windows", browsers=["chrome"]).random)
-            await Malenia.apply_stealth(self.context)
+            Tarnished.apply_stealth(self.context)
             self.logger.success("Playwirght has been started")
         except Exception as e:
             err_msg = f"Failed to start playwright: {e}"
             self.logger.error(err_msg)
             raise ValueError(err_msg)
 
-    async def stop(self) -> None:
+    def stop(self) -> None:
         '''
         Properly stops the app
         '''
-        await self.api.close()
-        await self.browser.close()
-        await self.playwright.stop()
+        #self.api.stop()
+        self.browser.close()
+        self.playwright.stop()
         self.logger.success("Playwright has been stoped")
         
-    async def get_banks_and_merchants(self) -> Dict[str, Any]:
+    def get_banks_and_merchants(self) -> Dict[str, Any]:
         '''
         Used to retrive the list of suitable merchants and banks
         '''
         try:
             url = f"https://bingx.paycat.com/ru-ru/trade/self-selection?fiat={self.fiat}&type={self.action}"
             # Banks handler
-            async def banks_handler(route: Route) -> None:
-                response = await route.fetch()
+            def banks_handler(route: Route) -> None:
+                response = route.fetch()
                 # Saving to 'raw_banks'
-                data = await response.json()
+                data = response.json()
                 if "data" not in data.keys():
                     err_msg = "Can not retrive banks"
                     self.logger.error(err_msg)
                     raise ValueError(err_msg)
                 self.raw_banks = data['data']['paymentMethodList'] 
                 del data
-                await route.fulfill(response=response)
+                route.fulfill(response=response)
             # Merchants handler
-            async def merchants_handler(route: Route) -> None:
+            def merchants_handler(route: Route) -> None:
                 # NOTE: Tried to modify requests, but always got error with code 100005 
                 # Saving to 'raw_merchants'
-                response = await route.fetch()
-                data = await response.json()
+                response = route.fetch()
+                data = response.json()
                 if "data" not in data.keys():
                     err_msg = "Can not retrive banks"
                     self.logger.error(err_msg)
                     raise ValueError(err_msg)
                 self.raw_merchants = data['data']['dataList'][:10] # type: ignore
                 del data
-                await route.fulfill(response=response)
+                route.fulfill(response=response)
             # Setting up handlers
-            page = await self.context.new_page()
-            await page.route("https://api-app.qq-os.com/api/c2c/v1/advert/payment/list*", banks_handler)
-            await page.route("https://api-app.qq-os.com/api/c2c/v1/advert/list*", merchants_handler)
-            await page.goto(url=url, wait_until="networkidle", timeout = 10000)
-            await page.close()
+            page = self.context.new_page()
+            page.route("https://api-app.qq-os.com/api/c2c/v1/advert/payment/list*", banks_handler)
+            page.route("https://api-app.qq-os.com/api/c2c/v1/advert/list*", merchants_handler)
+            page.goto(url=url, wait_until="networkidle", timeout = 10000)
+            page.close()
             # Prepairing information
             def format_bank(bank: Dict[str, Any]) -> Dict[str, Any]:
                 return {
@@ -133,7 +133,7 @@ class BingX:
 
         return {"banks": list(map(format_bank, self.raw_banks)), "merchants": list(map(format_merchant, self.raw_merchants))} # type: ignore
 
-    async def get_spot(self) -> Dict[str, Any]:
+    def get_spot(self) -> Dict[str, Any]:
         '''
         Used to retrive spot info
         '''
@@ -142,7 +142,7 @@ class BingX:
                        "SOL/USDT", "DOP/USDT", "FTN/USDT",
                        "FDUSD/USDT", "XRP/USDT", "PEPE/USDT",
                        "MNT/USDT", "USDC/USDT", "DOGE/USDT"]
-            ctx = await self.api.fetch_tickers(symbols)
+            ctx = self.api.fetch_tickers(symbols)
             
             def format_symbol(symbol: str, data: Any) -> Dict[str, Any]:
                 return {'symbol': symbol, 'price': data['close']}
@@ -154,9 +154,9 @@ class BingX:
             self.logger.error(err_msg)
             raise ValueError(err_msg)
 
-    async def report(self) -> Dict[str, Any]:
-        banks_and_merchants = await self.get_banks_and_merchants()
-        spot = await self.get_spot()
+    def report(self) -> Dict[str, Any]:
+        banks_and_merchants = self.get_banks_and_merchants()
+        spot = self.get_spot()
         return {
                 "banks": banks_and_merchants["banks"],
                 "merchants": banks_and_merchants["merchants"],
@@ -164,7 +164,7 @@ class BingX:
                 }
 
 
-async def main():
+def main():
     # NOTE: Only USDT is supported, filters are not applied,
     # symbols in spot are set in code - for all these f@ck ups thanks to CloudFlare 
     # Left api_key and secret empty - it just works somehow 0_0
@@ -175,11 +175,11 @@ async def main():
         action = Actions.SELL,
         price = 115
     )
-    await bingx.setup_playwright()
-    data = await bingx.report()
+    bingx.setup_playwright()
+    data = bingx.report()
     with open("report.json", "w") as report:
         report.write(json.dumps(data, indent=4))
-    await bingx.stop()
+    bingx.stop()
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()

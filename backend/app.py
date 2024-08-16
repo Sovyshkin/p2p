@@ -163,16 +163,18 @@ def admin()-> json:
             action = bingx_action,
             price = float(amount) 
         )
-        async def get_bingx_report(bingx: BingX) -> Dict[str, Any]:
+        def get_bingx_report(bingx: BingX) -> Dict[str, Any]:
             try:
-                await bingx.setup_playwright()
-                report = await bingx.report()
-                await bingx.stop()
+                bingx.setup_playwright()
+                report = bingx.report()
+                bingx.stop()
                 return report
             except Exception as e:
                 print(f"[!] BingX info can not be received: {e}")
         
-        bingx_report = asyncio.run(get_bingx_report(bingx))
+        bingx_report = get_bingx_report(bingx)
+        if bingx_report is None:
+            bingx_report = {}
 
     result['price_kuc'] = price_list_kuc
     result['only_code_bank_kuc'] = name_banks_kuc
@@ -188,7 +190,9 @@ def admin()-> json:
 @app.route('/spot', methods=['POST'])
 def spot()-> json:
     result = {}
+    from pprint import pprint
     #data = request.get_json()
+    #pprint(data)
     # BitGet
     bitget = BitGet(
         coin = "USDT",
@@ -201,7 +205,7 @@ def spot()-> json:
 
     # Получение отчёта от BitGet
     try_count = 0
-    bitget_report = {}
+    bitget_report = {'spot': {}}
     # Если все попытки получения закончились неудачно - возвращается пустой словарь
     while try_count < 3:
         try:
@@ -228,7 +232,7 @@ def spot()-> json:
 
     # Получение отчёта от Abcex
     try_count = 0
-    abcex_report = {}
+    abcex_report = {'spot': {}}
     # Если все попытки получения закончились неудачно - возвращается пустой словарь
     while try_count < 3:
         try:
@@ -242,7 +246,6 @@ def spot()-> json:
             break
 
     # Получение отчёта от BingX
-    bingx_report = {}
     bingx = BingX(
         api_key= "",
         secret = "",
@@ -250,23 +253,26 @@ def spot()-> json:
         action = BingXActions.BUY,
         price = 91.0 
     )
-    async def get_bingx_report(bingx: BingX) -> Dict[str, Any]:
+    def get_bingx_report(bingx: BingX) -> Dict[str, Any]:
         try:
-            await bingx.setup_playwright()
-            report = await bingx.report()
-            await bingx.stop()
+            bingx.setup_playwright()
+            report = bingx.report()
+            bingx.stop()
             return report
         except Exception as e:
             print(f"[!] BingX info can not be received: {e}")
+
     
-    bingx_report = asyncio.run(get_bingx_report(bingx))
-    spot_bybit_price = take_spot_bybit()
-    spot_kukoin_price = kukoin_spot()
+    bingx_report = get_bingx_report(bingx)
+    if bingx_report is None:
+        bingx_report = {'spot': {}}
+    result['bitpapa'] = bitpapa_spot()
     result['bitget'] = bitget_report
     result['bingx'] = bingx_report
     result['abcex'] = abcex_report
-    result['bybit'] =  spot_bybit_price
-    result['kucoin'] = spot_kukoin_price
+    result['mexc'] = [{'price': item['price'], 'symbol': item['symbol']} for item in mexc_spot()][:10] 
+    result['bybit'] =  take_spot_bybit()
+    result['kucoin'] = [{'price': item['price'], 'symbol': item['symbol']} for item in kukoin_spot()][:10]
     return jsonify(result)
 
 

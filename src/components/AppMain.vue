@@ -142,17 +142,15 @@ export default {
 
     async load_info() {
       try {
+        // Showing alert
+        let alert = document.getElementById("alert_modal");
+        alert.style.display = "block";
         this.mexc = [];
         this.bybit = [];
         this.kucoin = [];
         this.bitpapa = [];
         if (this.price) {
           this.price = JSON.stringify(this.price);
-        }
-        if (this.buy) {
-          this.buy = "1";
-        } else {
-          this.buy = "0";
         }
         let banks = [];
         if (this.banks_active) {
@@ -185,6 +183,8 @@ export default {
         this.banks_mexc = response.data.paymetod_mexc;
         this.bitpapa = response.data.price_list_mexc_bitpapa;
         this.banks.push(this.banks_abcex);
+        // Hiding alert
+        alert.style.display = "none";
         console.log(response);
       } catch (err) {
         console.log(err);
@@ -193,9 +193,20 @@ export default {
 
     async load_spot() {
       try {
+        let alert = document.getElementById("alert_modal");
+        // Showing alert
+        alert.style.display = "block";
         let response = await axios.post(`/spot`);
         this.abcex = response.data.abcex.spot;
-        console.log(this.abcex);
+        this.bitget = response.data.bitget.spot;
+        this.bingx = response.data.bingx.spot;
+        this.mexc = response.data.mexc;
+        this.bybit = response.data.bybit;
+        this.kucoin = response.data.kucoin;
+        this.bitpapa = response.data.bitpapa;
+        // Hiding alert
+        alert.style.display = "none";
+        console.log(response);
       } catch (err) {
         console.log(err);
       }
@@ -240,6 +251,35 @@ export default {
 </script>
 <template>
   <div class="wrapper">
+    <!-- Alert modal -->
+    <div
+      id="alert_modal"
+      class="modal"
+      style="
+        display: none;
+        background-color: yellow;
+        border-radius: 15px;
+        box-shadow: 0 0 15px 0 #00000037;
+      "
+    >
+      <div style="padding: 5px; margin: 5px">
+        <h2>Получение данных</h2>
+        <p>
+          Может занять некоторое время - подождите, пожалуйста!
+          <img
+            style="
+              float: right;
+              width: 3%;
+              vertical-align: baseline;
+              margin: 5px;
+            "
+            src="https://media.tenor.com/TAqs38FFJiwAAAAi/loading.gif"
+            alt="Loading..."
+          />
+        </p>
+      </div>
+    </div>
+
     <div class="filter">
       <div class="buysell">
         <button @click="buysell(true)" class="btn" :class="{ buy: this.buy }">
@@ -325,11 +365,13 @@ export default {
     </div>
     <div class="offers">
       <div class="cards">
+        <!-- eslint-disable vue/no-use-v-if-with-v-for -->
         <div
           class="card"
           @click="activeMain(card)"
           v-for="card in mexc"
           :key="card"
+          v-if="!spot"
         >
           <div class="title">{{ card.user }}</div>
           <div class="available">
@@ -346,6 +388,17 @@ export default {
             </div>
           </div>
         </div>
+        <div
+          class="card"
+          @click="activeMain(card)"
+          v-for="card in mexc"
+          :key="card.id"
+          v-else
+        >
+          <div class="price">
+            {{ card.price }} <span>{{ card.symbol }}</span>
+          </div>
+        </div>
       </div>
       <div class="cards">
         <div
@@ -353,6 +406,7 @@ export default {
           @click="activeMain(card)"
           v-for="card in bitpapa"
           :key="card.id"
+          v-if="!spot"
         >
           <div class="title">{{ card.user }}</div>
           <div class="available"><span>Доступно:</span> {{ card.max }}</div>
@@ -367,13 +421,27 @@ export default {
             </div>
           </div>
         </div>
+        <div
+          class="card"
+          @click="activeMain(card)"
+          v-for="card in bitpapa"
+          :key="card.id"
+          v-else
+        >
+          <div class="price">
+            {{ card.price }} <span>{{ card.symbol }}</span>
+          </div>
+        </div>
       </div>
+      <!-- eslint-enable -->
       <div class="cards">
+        <!-- eslint-disable vue/no-use-v-if-with-v-for -->
         <div
           class="card"
           @click="activeMain(card)"
           v-for="card in bingx"
           :key="card.id"
+          v-if="!spot"
         >
           <div class="title">{{ card.merchant }}</div>
           <div class="available"><span>Доступно:</span> {{ card.max }}</div>
@@ -388,13 +456,27 @@ export default {
             </div>
           </div>
         </div>
+        <div
+          class="card"
+          @click="activeMain(card)"
+          v-for="card in bingx"
+          :key="card.id"
+          v-else
+        >
+          <div class="price">
+            {{ card.price }} <span>{{ card.symbol }}</span>
+          </div>
+        </div>
       </div>
+      <!-- eslint-enable -->
       <div class="cards">
+        <!-- eslint-disable vue/no-use-v-if-with-v-for -->
         <div
           class="card"
           @click="activeMain(card)"
           v-for="card in bitget"
           :key="card.id"
+          v-if="!spot"
         >
           <div class="title">{{ card.merchant }}</div>
           <div class="available"><span>Доступно:</span> {{ card.max }}</div>
@@ -409,13 +491,27 @@ export default {
             </div>
           </div>
         </div>
+        <div
+          class="card"
+          @click="activeMain(card)"
+          v-for="card in bitget"
+          :key="card.id"
+          v-else
+        >
+          <div class="price">
+            {{ card.price }} <span>{{ card.symbol }}</span>
+          </div>
+        </div>
       </div>
+      <!-- eslint-enable -->
       <div class="cards">
+        <!-- eslint-disable vue/no-use-v-if-with-v-for -->
         <div
           class="card"
           @click="activeMain(card)"
           v-for="card in bybit"
           :key="card.id"
+          v-if="!spot"
         >
           <div class="title">{{ card.nickName }}</div>
           <div class="available">
@@ -432,7 +528,19 @@ export default {
             </div>
           </div>
         </div>
+        <div
+          class="card"
+          @click="activeMain(card)"
+          v-for="card in bybit"
+          :key="card.id"
+          v-else
+        >
+          <div class="price">
+            {{ card.price }} <span>{{ card.symbol }}</span>
+          </div>
+        </div>
       </div>
+      <!-- eslint-enable -->
       <!-- eslint-disable vue/no-use-v-if-with-v-for -->
       <div class="cards">
         <div
@@ -469,11 +577,13 @@ export default {
       </div>
       <!-- eslint-enable -->
       <div class="cards">
+        <!-- eslint-disable vue/no-use-v-if-with-v-for -->
         <div
           class="card"
           @click="activeMain(card)"
           v-for="card in kucoin"
           :key="card.id"
+          v-if="!spot"
         >
           <div class="title">{{ card.nickName }}</div>
           <div class="available">
@@ -490,8 +600,20 @@ export default {
             </div>
           </div>
         </div>
+        <div
+          class="card"
+          @click="activeMain(card)"
+          v-for="card in kucoin"
+          :key="card.id"
+          v-else
+        >
+          <div class="price">
+            {{ card.price }} <span>{{ card.symbol }}</span>
+          </div>
+        </div>
       </div>
     </div>
+    <!-- eslint-enable -->
     <div class="main_card" v-if="main_active">
       <div class="btns">
         <img
@@ -757,6 +879,7 @@ export default {
   font-weight: 600;
   text-align: center;
   font-size: 20px;
+  word-wrap: break-word;
 }
 
 .offer_banks,
