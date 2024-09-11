@@ -1,7 +1,0 @@
-flask
-flask_cors
-requests
-fake-useragent
-loguru
-undetected_playwright
-ccxt

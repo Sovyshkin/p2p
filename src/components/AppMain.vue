@@ -1,7 +1,10 @@
 <script>
 import axios from "axios";
+import banks from "../../backend/trader_backend/banks.json";
+import AppLoader from "../components/AppLoader.vue";
 export default {
   name: "AppMain",
+  components: { AppLoader },
   data() {
     return {
       buy: true,
@@ -12,71 +15,6 @@ export default {
       bank: "",
       bank_active: false,
       banks_active: [],
-      // mexc: [
-      //   {
-      //     id: 1,
-      //     title: "Вадим",
-      //     available: 50000,
-      //     limit_from: 100,
-      //     limit_to: 10000,
-      //     price: 87.96,
-      //     banks: ["Volet"],
-      //   },
-      //   {
-      //     id: 1,
-      //     title: "Вадим",
-      //     available: 50000,
-      //     limit_from: 100,
-      //     limit_to: 10000,
-      //     price: 87.96,
-      //     banks: ["Volet"],
-      //   },
-      //   {
-      //     id: 1,
-      //     title: "Вадим",
-      //     available: 50000,
-      //     limit_from: 100,
-      //     limit_to: 10000,
-      //     price: 87.96,
-      //     banks: ["Volet"],
-      //   },
-      //   {
-      //     id: 1,
-      //     title: "Вадим",
-      //     available: 50000,
-      //     limit_from: 100,
-      //     limit_to: 10000,
-      //     price: 87.96,
-      //     banks: ["Volet"],
-      //   },
-      //   {
-      //     id: 1,
-      //     title: "Вадим",
-      //     available: 50000,
-      //     limit_from: 100,
-      //     limit_to: 10000,
-      //     price: 87.96,
-      //     banks: ["Volet"],
-      //   },
-      //   {
-      //     id: 1,
-      //     title: "Вадим",
-      //     available: 50000,
-      //     limit_from: 100,
-      //     limit_to: 10000,
-      //     price: 87.96,
-      //     banks: ["Volet", "Сбер"],
-      //   },
-      //   {
-      //     id: 1,
-      //     title: "Вадим",
-      //     available: 50000,
-      //     limit_from: 100,
-      //     limit_to: 10000,
-      //     price: 87.96,
-      //     banks: ["Volet", "Тинькофф"],
-      //   },
-      // ],
       bybit: [],
       kucoin: [],
       mexc: [],
@@ -84,16 +22,15 @@ export default {
       abcex: [],
       bitget: [],
       bingx: [],
-      banks_mexc: [],
-      banks_abcex: [],
-      banks_bitget: [],
       title: "",
+      price: 100,
       available: 0,
       limit_from: 0,
       limit_to: 0,
-      price: 0,
+      price_card: 100,
       banks_card: [],
       main_active: false,
+      isLoading: false,
     };
   },
   methods: {
@@ -127,12 +64,12 @@ export default {
 
     activeMain(card) {
       this.main_active = true;
-      this.title = card.title;
-      this.banks_card = card.banks;
-      this.available = card.available;
-      this.limit_to = card.limit_to;
-      this.limit_from = card.limit_from;
-      this.price = card.price;
+      this.title = card.merchant;
+      this.banks_card = card.banks_name;
+      this.available = card.max;
+      this.limit_to = card.min;
+      this.limit_from = card.max;
+      this.price_card = card.price;
     },
 
     printBank(id) {
@@ -142,52 +79,42 @@ export default {
 
     async load_info() {
       try {
-        // Showing alert
-        let alert = document.getElementById("alert_modal");
-        alert.style.display = "block";
+        this.isLoading = true;
         this.mexc = [];
         this.bybit = [];
         this.kucoin = [];
         this.bitpapa = [];
-        if (this.price) {
-          this.price = JSON.stringify(this.price);
-        }
-        let banks = [];
+        // eslint-disable-next-line no-unused-vars
+        this.banks = banks;
+        let selectedbanks = [];
         if (this.banks_active) {
           this.banks_active.forEach((item) => {
             let bank = this.banks.find((bank) => bank.name == item);
-            banks.push(bank.id);
+            selectedbanks.push(bank.id);
           });
         }
-        console.log(banks);
         let response = await axios.post(`/admin`, {
           params: {
             tokenId: this.coin || "USDT",
             currencyId: this.forex || "RUB",
-            amount: this.price,
-            paymant: banks,
+            price: this.price,
             side: this.buy,
-            name_banks: this.banks,
+            banks: selectedbanks,
           },
         });
-        this.banks = response.data.only_code_bank_bybit;
-        this.bybit = response.data.price_byb;
-        this.kucoin = response.data.price_kuc;
-        this.mexc = response.data.price_list_mexc_p2p;
+        this.bybit = response.data.bybit.merchants;
+        this.kucoin = response.data.kucoin.merchants;
+        this.mexc = response.data.mexc.merchants;
         this.abcex = response.data.abcex.merchants;
         this.bitget = response.data.bitget.merchants;
         this.bingx = response.data.bingx.merchants;
-        this.banks_abcex = response.data.abcex.banks;
-        this.banks_bitget = response.data.bitget.banks;
-        this.banks_bingx = response.data.bingx.banks;
-        this.banks_mexc = response.data.paymetod_mexc;
-        this.bitpapa = response.data.price_list_mexc_bitpapa;
-        this.banks.push(this.banks_abcex);
-        // Hiding alert
-        alert.style.display = "none";
+        this.bitpapa = response.data.bitpapa.merchants;
+
         console.log(response);
       } catch (err) {
         console.log(err);
+      } finally {
+        this.isLoading = false;
       }
     },
 
@@ -252,7 +179,7 @@ export default {
 <template>
   <div class="wrapper">
     <!-- Alert modal -->
-    <div
+    <!-- <div
       id="alert_modal"
       class="modal"
       style="
@@ -278,7 +205,7 @@ export default {
           />
         </p>
       </div>
-    </div>
+    </div> -->
 
     <div class="filter">
       <div class="buysell">
@@ -300,7 +227,12 @@ export default {
         <option value="NOT">NOT</option>
       </select>
       <div class="group">
-        <input type="number" class="sum" placeholder="Введите сумму" />
+        <input
+          type="number"
+          v-model="price"
+          class="sum"
+          placeholder="Введите сумму"
+        />
         <select v-model="forex" id="">
           <option value="RUB">RUB</option>
           <option value="USD">USD</option>
@@ -363,7 +295,8 @@ export default {
         <div class="title">KuCoin</div>
       </div>
     </div>
-    <div class="offers">
+    <AppLoader v-if="isLoading" />
+    <div class="offers" v-if="!isLoading">
       <div class="cards">
         <!-- eslint-disable vue/no-use-v-if-with-v-for -->
         <div
@@ -373,18 +306,16 @@ export default {
           :key="card"
           v-if="!spot"
         >
-          <div class="title">{{ card.user }}</div>
-          <div class="available">
-            <span>Доступно:</span> {{ card.available }}
-          </div>
+          <div class="title">{{ card.merchant }}</div>
+          <div class="available"><span>Доступно:</span> {{ card.max }}</div>
           <div class="limits">
             <span>от</span> {{ card.min }} <span>до</span> {{ card.max }}
             <span>RUB</span>
           </div>
           <div class="price">{{ card.price }} <span>RUB</span></div>
           <div class="offer_banks">
-            <div class="offer_bank" v-for="bank in card.payMethod" :key="bank">
-              {{ findMexcBank(bank) }}
+            <div class="offer_bank" v-for="bank in card.banks_name" :key="bank">
+              {{ bank }}
             </div>
           </div>
         </div>
@@ -408,7 +339,7 @@ export default {
           :key="card.id"
           v-if="!spot"
         >
-          <div class="title">{{ card.user }}</div>
+          <div class="title">{{ card.merchant }}</div>
           <div class="available"><span>Доступно:</span> {{ card.max }}</div>
           <div class="limits">
             <span>от</span> {{ card.min }} <span>до</span> {{ card.max }}
@@ -416,8 +347,8 @@ export default {
           </div>
           <div class="price">{{ card.price }} <span>RUB</span></div>
           <div class="offer_banks">
-            <div class="offer_bank">
-              {{ card.bank_name }}
+            <div class="offer_bank" v-for="bank in card.banks_name" :key="bank">
+              {{ bank }}
             </div>
           </div>
         </div>
@@ -451,8 +382,8 @@ export default {
           </div>
           <div class="price">{{ card.price }} <span>RUB</span></div>
           <div class="offer_banks">
-            <div class="offer_bank" v-for="bank in card.banks" :key="bank">
-              {{ findBingxBank(bank) }}
+            <div class="offer_bank" v-for="bank in card.banks_name" :key="bank">
+              {{ bank }}
             </div>
           </div>
         </div>
@@ -486,8 +417,8 @@ export default {
           </div>
           <div class="price">{{ card.price }} <span>RUB</span></div>
           <div class="offer_banks">
-            <div class="offer_bank" v-for="bank in card.banks" :key="bank">
-              {{ printBitgetBank(bank.id) }}
+            <div class="offer_bank" v-for="bank in card.banks_name" :key="bank">
+              {{ bank }}
             </div>
           </div>
         </div>
@@ -513,18 +444,16 @@ export default {
           :key="card.id"
           v-if="!spot"
         >
-          <div class="title">{{ card.nickName }}</div>
-          <div class="available">
-            <span>Доступно:</span> {{ card.lastQuantity }}
-          </div>
+          <div class="title">{{ card.merchant }}</div>
+          <div class="available"><span>Доступно:</span> {{ card.max }}</div>
           <div class="limits">
-            <span>от</span> {{ card.minAmount }} <span>до</span>
-            {{ card.maxAmount }} <span>RUB</span>
+            <span>от</span> {{ card.min }} <span>до</span> {{ card.max }}
+            <span>RUB</span>
           </div>
           <div class="price">{{ card.price }} <span>RUB</span></div>
           <div class="offer_banks">
-            <div class="offer_bank" v-for="bank in card.payments" :key="bank">
-              {{ printBank(bank) }}
+            <div class="offer_bank" v-for="bank in card.banks_name" :key="bank">
+              {{ bank }}
             </div>
           </div>
         </div>
@@ -558,8 +487,8 @@ export default {
           </div>
           <div class="price">{{ card.price }} <span>RUB</span></div>
           <div class="offer_banks">
-            <div class="offer_bank" v-for="bank in card.banks" :key="bank">
-              {{ findAbcexBank(bank) }}
+            <div class="offer_bank" v-for="bank in card.banks_name" :key="bank">
+              {{ bank }}
             </div>
           </div>
         </div>
@@ -585,18 +514,16 @@ export default {
           :key="card.id"
           v-if="!spot"
         >
-          <div class="title">{{ card.nickName }}</div>
-          <div class="available">
-            <span>Доступно:</span> {{ card.currencyBalanceQuantity }}
-          </div>
+          <div class="title">{{ card.merchant }}</div>
+          <div class="available"><span>Доступно:</span> {{ card.max }}</div>
           <div class="limits">
-            <span>от</span> {{ card.limitMinQuote }} <span>до</span>
-            {{ card.limitMaxQuote }} <span>RUB</span>
+            <span>от</span> {{ card.min }} <span>до</span> {{ card.max }}
+            <span>RUB</span>
           </div>
-          <div class="price">{{ card.floatPrice }} <span>RUB</span></div>
+          <div class="price">{{ card.price }} <span>RUB</span></div>
           <div class="offer_banks">
-            <div class="offer_bank" v-for="bank in card.adPayTypes" :key="bank">
-              {{ bank.payTypeCode }}
+            <div class="offer_bank" v-for="bank in card.banks_name" :key="bank">
+              {{ bank }}
             </div>
           </div>
         </div>
@@ -629,7 +556,7 @@ export default {
         <span>от</span> {{ limit_from }} <span>до</span> {{ limit_to }}
         <span>RUB</span>
       </div>
-      <div class="main_price">{{ price }} <span>RUB</span></div>
+      <div class="main_price">{{ price_card }} <span>RUB</span></div>
       <div class="main_offer_banks">
         <div class="main_offer_bank" v-for="bank in banks_card" :key="bank">
           {{ bank }}
@@ -775,7 +702,7 @@ export default {
 
 .banks {
   width: 100%;
-  background-color: #f0f0f5;
+  background-color: #fff;
   border-radius: 10px;
   padding: 10px 12px;
   z-index: 3;
@@ -859,7 +786,7 @@ export default {
 }
 
 .card:hover {
-  transform: scale(1.06);
+  transform: scale(1.02);
 }
 
 .card span {
@@ -902,6 +829,9 @@ export default {
 
 .offers {
   align-items: stretch;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 80vh;
 }
 
 @media (max-width: 1150px) {
