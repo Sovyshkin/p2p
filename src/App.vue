@@ -1,11 +1,23 @@
 <script>
 import AppLogin from "./components/AppLogin.vue";
-import AppMain from "./components/AppMain.vue";
+import AppMexc from "./components/AppMexc.vue";
+import AppBitPapa from "./components/AppBitPapa.vue";
+import AppBingx from "./components/AppBingx.vue";
+import AppBitGet from "./components/AppBitGet.vue";
+import AppBybit from "./components/AppBybit.vue";
+import AppAbcex from "./components/AppAbcex.vue";
+import AppKuCoin from "./components/AppKuCoin.vue";
 export default {
   name: "App",
   components: {
     AppLogin,
-    AppMain,
+    AppMexc,
+    AppBitPapa,
+    AppBingx,
+    AppBitGet,
+    AppBybit,
+    AppAbcex,
+    AppKuCoin,
   },
   data() {
     return {
@@ -32,7 +44,13 @@ export default {
 <template>
   <div class="wrap">
     <AppLogin @updateLogin="handleLogin" v-if="login" />
-    <AppMain v-if="!login" />
+    <AppMexc v-if="!login" />
+    <AppBitPapa v-if="!login" />
+    <AppBingx v-if="!login" />
+    <AppBitGet v-if="!login" />
+    <AppBybit v-if="!login" />
+    <AppAbcex v-if="!login" />
+    <AppKuCoin v-if="!login" />
   </div>
 </template>
 <style>
