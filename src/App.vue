@@ -1,56 +1,24 @@
 <script>
-import AppLogin from "./components/AppLogin.vue";
-import AppMexc from "./components/AppMexc.vue";
-import AppBitPapa from "./components/AppBitPapa.vue";
-import AppBingx from "./components/AppBingx.vue";
-import AppBitGet from "./components/AppBitGet.vue";
-import AppBybit from "./components/AppBybit.vue";
-import AppAbcex from "./components/AppAbcex.vue";
-import AppKuCoin from "./components/AppKuCoin.vue";
 export default {
   name: "App",
-  components: {
-    AppLogin,
-    AppMexc,
-    AppBitPapa,
-    AppBingx,
-    AppBitGet,
-    AppBybit,
-    AppAbcex,
-    AppKuCoin,
-  },
+  components: {},
   data() {
-    return {
-      login: true,
-      main: false,
-    };
+    return {};
   },
-  methods: {
-    handleLogin(login) {
-      this.login = login;
-      this.main = !login;
-    },
-
-    checkLogin() {
-      this.login = !localStorage.getItem("login");
-      this.main = !this.login;
-    },
-  },
+  methods: {},
   mounted() {
-    this.checkLogin();
+    let login = localStorage.getItem("login");
+    if (!login) {
+      this.$router.push({ name: "login" });
+    } else {
+      this.$router.push({ name: "main" });
+    }
   },
 };
 </script>
 <template>
   <div class="wrap">
-    <AppLogin @updateLogin="handleLogin" v-if="login" />
-    <AppMexc v-if="!login" />
-    <AppBitPapa v-if="!login" />
-    <AppBingx v-if="!login" />
-    <AppBitGet v-if="!login" />
-    <AppBybit v-if="!login" />
-    <AppAbcex v-if="!login" />
-    <AppKuCoin v-if="!login" />
+    <router-view></router-view>
   </div>
 </template>
 <style>

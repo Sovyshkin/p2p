@@ -1,6 +1,5 @@
 <script>
 import axios from "axios";
-import banks from "../../backend/trader_backend/banks.json";
 import AppLoader from "../components/AppLoader.vue";
 export default {
   name: "AppMain",
@@ -8,20 +7,18 @@ export default {
   data() {
     return {
       buy: true,
+      main: "mexc",
       coin: "USDT",
+      coins: [],
       forex: "RUB",
+      fiats: [],
       spot: false,
       banks: [],
       bank: "",
       bank_active: false,
       banks_active: [],
-      bybit: [],
-      kucoin: [],
-      mexc: [],
-      bitpapa: [],
-      abcex: [],
-      bitget: [],
-      bingx: [],
+      merchants: [],
+      spots: [],
       title: "",
       price: 100,
       available: 0,
@@ -31,17 +28,53 @@ export default {
       banks_card: [],
       main_active: false,
       isLoading: false,
+      items: [
+        {
+          name: "Mexc",
+          route: "mexc",
+          active: true,
+        },
+        {
+          name: "BingX",
+          route: "bingx",
+          active: false,
+        },
+        {
+          name: "BitPapa",
+          route: "bitpapa",
+          active: false,
+        },
+        {
+          name: "BitGet",
+          route: "bitget",
+          active: false,
+        },
+        {
+          name: "ByBit",
+          route: "bybit",
+          active: false,
+        },
+        {
+          name: "Abcex",
+          route: "abcex",
+          active: false,
+        },
+        {
+          name: "KuCoin",
+          route: "kucoin",
+          active: false,
+        },
+      ],
+      nameMain: "",
     };
   },
   methods: {
-    async log() {
-      this.$emit("updateLogin", false);
-    },
     buysell(f) {
       this.buy = f;
     },
     spotp2p(f) {
       this.spot = f;
+      this.getInfo();
     },
 
     bankClick(id) {
@@ -72,45 +105,36 @@ export default {
       this.price_card = card.price;
     },
 
-    printBank(id) {
-      let bank = this.banks.find((bank) => bank.id == id);
-      return bank ? bank.name : null; // Возвращает имя банка, если найден, иначе null
-    },
-
     async load_info() {
       try {
         this.isLoading = true;
-        this.mexc = [];
-        this.bybit = [];
-        this.kucoin = [];
-        this.bitpapa = [];
-        // eslint-disable-next-line no-unused-vars
-        this.banks = banks;
-        let selectedbanks = [];
+        // this.mexc = [];
+        // this.bybit = [];
+        // this.kucoin = [];
+        // this.bitpapa = [];
+        // // eslint-disable-next-line no-unused-vars
+        // this.banks = banks;
+        let selectedbanks = [""];
         if (this.banks_active) {
           this.banks_active.forEach((item) => {
             let bank = this.banks.find((bank) => bank.name == item);
             selectedbanks.push(bank.id);
           });
         }
-        let response = await axios.post(`/admin`, {
-          params: {
-            tokenId: this.coin || "USDT",
-            currencyId: this.forex || "RUB",
-            price: this.price,
-            side: this.buy,
-            banks: selectedbanks,
-          },
-        });
-        this.bybit = response.data.bybit.merchants;
-        this.kucoin = response.data.kucoin.merchants;
-        this.mexc = response.data.mexc.merchants;
-        this.abcex = response.data.abcex.merchants;
-        this.bitget = response.data.bitget.merchants;
-        this.bingx = response.data.bingx.merchants;
-        this.bitpapa = response.data.bitpapa.merchants;
-
+        let response = await axios.get(`api/${this.main}/info`);
         console.log(response);
+        this.banks = response.data.data.banks;
+        this.coins = response.data.data.coins;
+        this.fiats = response.data.data.fiats;
+        let res = await axios.post(`/api/${this.main}/merchants`, {
+          coin: this.coin,
+          fiat: this.forex,
+          amount: String(this.price),
+          action: this.buy,
+          banks: [""],
+        });
+        console.log(res);
+        this.merchants = res.data.data;
       } catch (err) {
         console.log(err);
       } finally {
@@ -120,50 +144,25 @@ export default {
 
     async load_spot() {
       try {
-        let alert = document.getElementById("alert_modal");
-        // Showing alert
-        alert.style.display = "block";
-        let response = await axios.post(`/spot`);
-        this.abcex = response.data.abcex.spot;
-        this.bitget = response.data.bitget.spot;
-        this.bingx = response.data.bingx.spot;
-        this.mexc = response.data.mexc;
-        this.bybit = response.data.bybit;
-        this.kucoin = response.data.kucoin;
-        this.bitpapa = response.data.bitpapa;
-        // Hiding alert
-        alert.style.display = "none";
+        this.isLoading = true;
+        let response = await axios.get(`/api/${this.main}/spot`);
         console.log(response);
+        this.spots = response.data.data;
+        this.spots = this.spots.slice(0, 500);
       } catch (err) {
         console.log(err);
+      } finally {
+        this.isLoading = false;
       }
     },
 
-    findMexcBank(id) {
-      if (id && this.banks_mexc) {
-        return this.banks_mexc.find((bank) => bank.id == id).metod;
-      }
-    },
-
-    findAbcexBank(id) {
-      if (id && this.banks_abcex) {
-        return this.banks_abcex.find((bank) => bank.id == id).name;
-      }
-    },
-
-    findBingxBank(id) {
-      if (id && this.banks_bingx) {
-        return this.banks_bingx.find((bank) => bank.id == id).name;
-      }
-    },
-
-    findBitgetBank(id) {
-      if (id && this.banks_bitget) {
-        return this.banks_bitget.find((bank) => bank.id == id).name;
-      }
+    clickMain(route) {
+      this.main = route;
+      this.getInfo();
     },
 
     getInfo() {
+      this.nameMain = this.items.find((item) => item.route == this.main).name;
       if (this.spot) {
         this.load_spot();
       } else {
@@ -172,41 +171,23 @@ export default {
     },
   },
   mounted() {
-    this.load_info();
+    this.getInfo();
   },
 };
 </script>
 <template>
   <div class="wrapper">
-    <!-- Alert modal -->
-    <!-- <div
-      id="alert_modal"
-      class="modal"
-      style="
-        display: none;
-        background-color: yellow;
-        border-radius: 15px;
-        box-shadow: 0 0 15px 0 #00000037;
-      "
-    >
-      <div style="padding: 5px; margin: 5px">
-        <h2>Получение данных</h2>
-        <p>
-          Может занять некоторое время - подождите, пожалуйста!
-          <img
-            style="
-              float: right;
-              width: 3%;
-              vertical-align: baseline;
-              margin: 5px;
-            "
-            src="https://media.tenor.com/TAqs38FFJiwAAAAi/loading.gif"
-            alt="Loading..."
-          />
-        </p>
-      </div>
-    </div> -->
-
+    <div class="wrap-btns">
+      <button
+        @click="clickMain(item.route)"
+        class="btn"
+        v-for="item in items"
+        :key="item.name"
+      >
+        {{ item.name }}
+      </button>
+    </div>
+    <h1>{{ this.nameMain }}</h1>
     <div class="filter">
       <div class="buysell">
         <button @click="buysell(true)" class="btn" :class="{ buy: this.buy }">
@@ -221,10 +202,9 @@ export default {
         </button>
       </div>
       <select class="coin" v-model="coin" id="">
-        <option value="BTC">BTC</option>
-        <option value="ETH">ETH</option>
-        <option value="USDT">USDT</option>
-        <option value="NOT">NOT</option>
+        <option v-for="coin in coins" :key="coin" :value="coin">
+          {{ coin }}
+        </option>
       </select>
       <div class="group">
         <input
@@ -234,9 +214,9 @@ export default {
           placeholder="Введите сумму"
         />
         <select v-model="forex" id="">
-          <option value="RUB">RUB</option>
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
+          <option v-for="fiat in fiats" :key="fiat" :value="fiat">
+            {{ fiat }}
+          </option>
         </select>
       </div>
       <div class="group-bank">
@@ -272,294 +252,59 @@ export default {
       </div>
       <button class="btn apply" @click="getInfo()">Применить</button>
     </div>
-    <div class="market">
-      <div class="marcol">
-        <div class="title">Mexc</div>
-      </div>
-      <div class="marcol">
-        <div class="title">BitPapa</div>
-      </div>
-      <div class="marcol">
-        <div class="title">BingX</div>
-      </div>
-      <div class="marcol">
-        <div class="title">BitGet</div>
-      </div>
-      <div class="marcol">
-        <div class="title">ByBit</div>
-      </div>
-      <div class="marcol">
-        <div class="title">Abcex</div>
-      </div>
-      <div class="marcol">
-        <div class="title">KuCoin</div>
-      </div>
-    </div>
     <AppLoader v-if="isLoading" />
     <div class="offers" v-if="!isLoading">
-      <div class="cards">
-        <!-- eslint-disable vue/no-use-v-if-with-v-for -->
-        <div
-          class="card"
-          @click="activeMain(card)"
-          v-for="card in mexc"
-          :key="card"
-          v-if="!spot"
-        >
-          <div class="title">{{ card.merchant }}</div>
-          <div class="available"><span>Доступно:</span> {{ card.max }}</div>
-          <div class="limits">
-            <span>от</span> {{ card.min }} <span>до</span> {{ card.max }}
-            <span>RUB</span>
-          </div>
-          <div class="price">{{ card.price }} <span>RUB</span></div>
-          <div class="offer_banks">
-            <div class="offer_bank" v-for="bank in card.banks_name" :key="bank">
-              {{ bank }}
-            </div>
-          </div>
-        </div>
-        <div
-          class="card"
-          @click="activeMain(card)"
-          v-for="card in mexc"
-          :key="card.id"
-          v-else
-        >
-          <div class="price">
-            {{ card.price }} <span>{{ card.symbol }}</span>
-          </div>
-        </div>
-      </div>
-      <div class="cards">
-        <div
-          class="card"
-          @click="activeMain(card)"
-          v-for="card in bitpapa"
-          :key="card.id"
-          v-if="!spot"
-        >
-          <div class="title">{{ card.merchant }}</div>
-          <div class="available"><span>Доступно:</span> {{ card.max }}</div>
-          <div class="limits">
-            <span>от</span> {{ card.min }} <span>до</span> {{ card.max }}
-            <span>RUB</span>
-          </div>
-          <div class="price">{{ card.price }} <span>RUB</span></div>
-          <div class="offer_banks">
-            <div class="offer_bank" v-for="bank in card.banks_name" :key="bank">
-              {{ bank }}
-            </div>
-          </div>
-        </div>
-        <div
-          class="card"
-          @click="activeMain(card)"
-          v-for="card in bitpapa"
-          :key="card.id"
-          v-else
-        >
-          <div class="price">
-            {{ card.price }} <span>{{ card.symbol }}</span>
-          </div>
-        </div>
-      </div>
-      <!-- eslint-enable -->
-      <div class="cards">
-        <!-- eslint-disable vue/no-use-v-if-with-v-for -->
-        <div
-          class="card"
-          @click="activeMain(card)"
-          v-for="card in bingx"
-          :key="card.id"
-          v-if="!spot"
-        >
-          <div class="title">{{ card.merchant }}</div>
-          <div class="available"><span>Доступно:</span> {{ card.max }}</div>
-          <div class="limits">
-            <span>от</span> {{ card.min }} <span>до</span> {{ card.max }}
-            <span>RUB</span>
-          </div>
-          <div class="price">{{ card.price }} <span>RUB</span></div>
-          <div class="offer_banks">
-            <div class="offer_bank" v-for="bank in card.banks_name" :key="bank">
-              {{ bank }}
-            </div>
-          </div>
-        </div>
-        <div
-          class="card"
-          @click="activeMain(card)"
-          v-for="card in bingx"
-          :key="card.id"
-          v-else
-        >
-          <div class="price">
-            {{ card.price }} <span>{{ card.symbol }}</span>
-          </div>
-        </div>
-      </div>
-      <!-- eslint-enable -->
-      <div class="cards">
-        <!-- eslint-disable vue/no-use-v-if-with-v-for -->
-        <div
-          class="card"
-          @click="activeMain(card)"
-          v-for="card in bitget"
-          :key="card.id"
-          v-if="!spot"
-        >
-          <div class="title">{{ card.merchant }}</div>
-          <div class="available"><span>Доступно:</span> {{ card.max }}</div>
-          <div class="limits">
-            <span>от</span> {{ card.min }} <span>до</span> {{ card.max }}
-            <span>RUB</span>
-          </div>
-          <div class="price">{{ card.price }} <span>RUB</span></div>
-          <div class="offer_banks">
-            <div class="offer_bank" v-for="bank in card.banks_name" :key="bank">
-              {{ bank }}
-            </div>
-          </div>
-        </div>
-        <div
-          class="card"
-          @click="activeMain(card)"
-          v-for="card in bitget"
-          :key="card.id"
-          v-else
-        >
-          <div class="price">
-            {{ card.price }} <span>{{ card.symbol }}</span>
-          </div>
-        </div>
-      </div>
-      <!-- eslint-enable -->
-      <div class="cards">
-        <!-- eslint-disable vue/no-use-v-if-with-v-for -->
-        <div
-          class="card"
-          @click="activeMain(card)"
-          v-for="card in bybit"
-          :key="card.id"
-          v-if="!spot"
-        >
-          <div class="title">{{ card.merchant }}</div>
-          <div class="available"><span>Доступно:</span> {{ card.max }}</div>
-          <div class="limits">
-            <span>от</span> {{ card.min }} <span>до</span> {{ card.max }}
-            <span>RUB</span>
-          </div>
-          <div class="price">{{ card.price }} <span>RUB</span></div>
-          <div class="offer_banks">
-            <div class="offer_bank" v-for="bank in card.banks_name" :key="bank">
-              {{ bank }}
-            </div>
-          </div>
-        </div>
-        <div
-          class="card"
-          @click="activeMain(card)"
-          v-for="card in bybit"
-          :key="card.id"
-          v-else
-        >
-          <div class="price">
-            {{ card.price }} <span>{{ card.symbol }}</span>
-          </div>
-        </div>
-      </div>
-      <!-- eslint-enable -->
       <!-- eslint-disable vue/no-use-v-if-with-v-for -->
-      <div class="cards">
-        <div
-          class="card"
-          @click="activeMain(card)"
-          v-for="card in abcex"
-          :key="card.id"
-          v-if="!spot"
-        >
-          <div class="title">{{ card.merchant }}</div>
-          <div class="available"><span>Доступно:</span> {{ card.max }}</div>
-          <div class="limits">
-            <span>от</span> {{ card.min }} <span>до</span> {{ card.max }}
-            <span>RUB</span>
-          </div>
-          <div class="price">{{ card.price }} <span>RUB</span></div>
-          <div class="offer_banks">
-            <div class="offer_bank" v-for="bank in card.banks_name" :key="bank">
-              {{ bank }}
-            </div>
-          </div>
+      <div
+        class="card"
+        @click="activeMain(card)"
+        v-for="card in merchants"
+        :key="card"
+        v-if="!spot"
+      >
+        <div class="title">{{ card.merchant }}</div>
+        <div class="available"><span>Доступно:</span> {{ card.max }}</div>
+        <div class="limits">
+          <span>от</span> {{ card.min }} <span>до</span> {{ card.max }}
+          <span>RUB</span>
         </div>
-        <div
-          class="card"
-          @click="activeMain(card)"
-          v-for="card in abcex"
-          :key="card.id"
-          v-else
-        >
-          <div class="price">
-            {{ card.price }} <span>{{ card.symbol }}</span>
+        <div class="price">{{ card.price }} <span>RUB</span></div>
+        <div class="offer_banks">
+          <div class="offer_bank" v-for="bank in card.bank_names" :key="bank">
+            {{ bank }}
           </div>
         </div>
       </div>
-      <!-- eslint-enable -->
-      <div class="cards">
-        <!-- eslint-disable vue/no-use-v-if-with-v-for -->
-        <div
-          class="card"
-          @click="activeMain(card)"
-          v-for="card in kucoin"
-          :key="card.id"
-          v-if="!spot"
-        >
-          <div class="title">{{ card.merchant }}</div>
-          <div class="available"><span>Доступно:</span> {{ card.max }}</div>
-          <div class="limits">
-            <span>от</span> {{ card.min }} <span>до</span> {{ card.max }}
-            <span>RUB</span>
-          </div>
-          <div class="price">{{ card.price }} <span>RUB</span></div>
-          <div class="offer_banks">
-            <div class="offer_bank" v-for="bank in card.banks_name" :key="bank">
-              {{ bank }}
-            </div>
-          </div>
+      <div
+        class="spot_card"
+        v-if="spot"
+        v-for="card in spots"
+        :key="card.symbol"
+      >
+        <span class="title">{{ card.symbol }}</span>
+        <span>-</span>
+        <span class="price">{{ card.price }}</span>
+      </div>
+      <div class="main_card" v-if="main_active">
+        <div class="btns">
+          <img
+            @click="this.main_active = false"
+            class="close"
+            src="../assets/close.png"
+            alt=""
+          />
         </div>
-        <div
-          class="card"
-          @click="activeMain(card)"
-          v-for="card in kucoin"
-          :key="card.id"
-          v-else
-        >
-          <div class="price">
-            {{ card.price }} <span>{{ card.symbol }}</span>
-          </div>
+        <div class="main_title">{{ title }}</div>
+        <div class="main_available"><span>Доступно:</span> {{ available }}</div>
+        <div class="main_limits">
+          <span>от</span> {{ limit_from }} <span>до</span> {{ limit_to }}
+          <span>RUB</span>
         </div>
-      </div>
-    </div>
-    <!-- eslint-enable -->
-    <div class="main_card" v-if="main_active">
-      <div class="btns">
-        <img
-          @click="this.main_active = false"
-          class="close"
-          src="../assets/close.png"
-          alt=""
-        />
-      </div>
-      <div class="main_title">{{ title }}</div>
-      <div class="main_available"><span>Доступно:</span> {{ available }}</div>
-      <div class="main_limits">
-        <span>от</span> {{ limit_from }} <span>до</span> {{ limit_to }}
-        <span>RUB</span>
-      </div>
-      <div class="main_price">{{ price_card }} <span>RUB</span></div>
-      <div class="main_offer_banks">
-        <div class="main_offer_bank" v-for="bank in banks_card" :key="bank">
-          {{ bank }}
+        <div class="main_price">{{ price_card }} <span>RUB</span></div>
+        <div class="main_offer_banks">
+          <div class="main_offer_bank" v-for="bank in banks_card" :key="bank">
+            {{ bank }}
+          </div>
         </div>
       </div>
     </div>
@@ -626,8 +371,7 @@ export default {
   padding: 20px;
   border-radius: 12px;
   display: flex;
-  align-items: center;
-  gap: 5px;
+  gap: 10px;
   box-shadow: 0 0 15px 0 #00000037;
 }
 
@@ -763,30 +507,21 @@ export default {
   background-color: #086788;
 }
 
-.cards {
-  width: 14%;
-  border-right: 1px solid #f0c808;
-  padding-right: 3px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.cards:last-child,
-.card:first-child {
-  border: none;
-}
-
 .card {
+  width: 49%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 5px;
-  border-top: 1px solid #f0c808;
+  border: 1px solid #f0c808;
+  border-radius: 20px;
   padding: 3px 0;
 }
 
 .card:hover {
-  transform: scale(1.02);
+  transform: scale(1.007);
+  background-color: #f0c808;
 }
 
 .card span {
@@ -811,7 +546,10 @@ export default {
 
 .offer_banks,
 .main_offer_banks {
+  width: 90%;
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 3px;
 }
@@ -832,6 +570,29 @@ export default {
   overflow-x: hidden;
   overflow-y: scroll;
   height: 80vh;
+  flex-wrap: wrap;
+}
+
+.spot_card {
+  width: 23%;
+  border: 1px solid #f0c808;
+  background-color: transparent;
+  border-radius: 5px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  overflow: scroll;
+}
+
+.spot_card::-webkit-scrollbar {
+  width: 0;
+}
+.spot_card span {
+  word-wrap: break-word;
+  font-size: 12px;
 }
 
 @media (max-width: 1150px) {
@@ -848,21 +609,15 @@ export default {
   }
 }
 
-@media (max-width: 680px) {
-  .available,
-  .limits,
-  .offer_banks {
-    display: none;
+@media (max-width: 560px) {
+  .card {
+    width: 100%;
   }
 }
 
 @media (max-width: 500px) {
   .market {
     padding: 8px;
-  }
-
-  .card .title {
-    display: none;
   }
 
   .market .title {
@@ -890,14 +645,9 @@ export default {
   }
 }
 
-@media (max-width: 375px) {
-  .market,
-  .offers {
-    gap: 0;
-  }
-
-  .price {
-    font-size: 13px;
+@media (max-width: 410px) {
+  .spot_card {
+    width: 48%;
   }
 }
 </style>
